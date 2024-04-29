@@ -4,7 +4,7 @@ function getPokemonInfo(pokemonNameOrId) {
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Página fuera de servicio');
+                throw new Error('Error');
             }
             return response.json();
         })
@@ -12,7 +12,6 @@ function getPokemonInfo(pokemonNameOrId) {
             const pokemonid = data.id;
             const pokemonName = capitalizeFirstLetter(data.name);
             const pokemonAnimatedSpriteUrl = data.sprites.versions['generation-v']['black-white'].animated.front_default;
-            const imagen = `./storage/img/pikachu.png`;
 
             document.getElementById('pokemonid').textContent = `${pokemonid} - ${pokemonName}`;
             if (pokemonAnimatedSpriteUrl !== null) {
