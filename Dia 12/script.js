@@ -1,3 +1,129 @@
+function cartas(CartasBaraja) {
+    const apiUrl = `https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1${CartasBaraja}`;
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const pokemonid = data.id;
+            const pokemonName = capitalizeFirstLetter(data.name);
+            const pokemonAnimatedSpriteUrl = data.sprites.versions['generation-v']['black-white'].animated.front_default;
+
+            document.getElementById('pokemonid').textContent = `${pokemonid} - ${pokemonName}`;
+            if (pokemonAnimatedSpriteUrl !== null) {
+                document.getElementById('pokemonImage').src = pokemonAnimatedSpriteUrl;
+            } else {
+                document.getElementById('pokemonImage').src = imagen;
+            }
+        })
+        .catch(error => {
+            console.error('Ocurrió un problema con tu función: ', error);
+        });
+}
+
+for (i = 0; i < 100; i++) {
+	cartas.splice(Math.random() * 52, 0, cartas[0]);
+	cartas.shift();
+}
+
+
+function DibujarCarta(DibujarCart) {
+    const apiUrl = `https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=2${DibujarCart}`;
+}
+
+
+function Reorganizar(ReorganizarCartas) {
+    const apiUrl = `https://deckofcardsapi.com/api/deck/<<deck_id>>/shuffle/
+    https://deckofcardsapi.com/api/deck/<<deck_id>>/shuffle/?remaining=true${ReorganizarCartas}`;
+}
+
+
+
+function BaraNueva(BarajaNueva) {
+    const apiUrl = `https://deckofcardsapi.com/api/deck/new/${BarajaNueva}`;
+}
+
+
+function Parcial(BarajaParcial) {
+    const apiUrl = `https://deckofcardsapi.com/api/deck/new/shuffle/?cards=AS,2S,KS,AD,2D,KD,AC,2C,KC,AH,2H,KH${BarajaParcial}`;
+}
+
+function Mezclar(MezclarBaraja) {
+    const apiUrl = `https://deckofcardsapi.com/api/deck/<<deck_id>>/pile/<<pile_name>>/shuffle/${MezclarBaraja}`;
+}
+
+
+
+
+// Función para barajar las cartas
+async function barajarCartas() {
+    try {
+      const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1');
+      const data = await response.json();
+      return data.deck_id;
+    } catch (error) {
+      console.error('Error al barajar las cartas:', error);
+      return null;
+    }
+  }
+  
+  // Función para obtener una carta del mazo
+  async function obtenerCarta(deckId) {
+    try {
+      const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
+      const data = await response.json();
+      return data.cards[0];
+    } catch (error) {
+      console.error('Error al obtener una carta:', error);
+      return null;
+    }
+  }
+  
+  // Función principal para barajar y mostrar las cartas
+  async function barajarYMostrarCartas() {
+    const deckId = await barajarCartas();
+    if (deckId) {
+      const carta1 = await obtenerCarta(deckId);
+      const carta2 = await obtenerCarta(deckId);
+      console.log('Carta 1:', carta1);
+      console.log('Carta 2:', carta2);
+      // Aquí puedes mostrar las cartas en tu interfaz de usuario o hacer lo que desees con ellas
+    }
+  }
+  
+  // Llamada a la función principal
+  barajarYMostrarCartas();
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 // Montamos el canvas con alta resolución
 var canvas = document.getElementById("canvas");
 canvas.width = 1220 * 2;
@@ -102,3 +228,4 @@ function plantarme() {
 function playagain() {
 	location.reload(true);
 }
+*/
