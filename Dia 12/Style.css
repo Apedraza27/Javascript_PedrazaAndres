@@ -1,7 +1,9 @@
 body{
-    background-color: gray;
+	background-image: url('Blackjack.jpg');
 }
-
+h1{
+	color: yellow;
+}
 button {
 	background-color: cadetblue;
 	border: none;
@@ -19,7 +21,7 @@ main {
 	margin: auto;
 }
     
-.mensaje {
+.message {
 	display: none;
 	position: fixed;
 	left: 50%;

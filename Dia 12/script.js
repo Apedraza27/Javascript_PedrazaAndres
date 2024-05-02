@@ -60,11 +60,11 @@ function Mezclar(MezclarBaraja) {
 
 //code
 const deckUrl = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1";
-const hitButton = document.querySelector(".hit-button");
+const hitButton = document.getElementById("pedirCarta");
 const cardsContainer = document.querySelector(".cards");
 const main = document.querySelector("main");
 const message = document.querySelector(".message");
-const tryAgain = document.querySelector(".try-again");
+const tryAgain = document.querySelector(".volvera-jugar");
 let deckId;
 let isGameOver = false;
 let total = 0;
@@ -100,8 +100,12 @@ hitButton.onclick = async function(){
   if(total > 21){
     main.style.filter = "blur(4px)";
     message.style.display = "block";
-	message.textContent = "¡Te has pasado de 21! Has perdido.";
+	  message.textContent = "¡Te has pasado de 21! Has perdido.";
+    tryAgain.style.display = "block";
+    hitButton.disabled = true;
   }
+ 
+
   console.log(total);
 }
 
@@ -110,11 +114,10 @@ tryAgain.onclick = function(){
   cardsContainer.innerHTML = "";
   main.style.filter = "blur(0px)";
   message.style.display = "none";
+  tryAgain.style.display = "none";
+  hitButton.disabled = false;
   getDeck();
 }
-
-
-
 
 
 
