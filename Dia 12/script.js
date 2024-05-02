@@ -1,3 +1,4 @@
+/*
 function cartas(CartasBaraja) {
     const apiUrl = `https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1${CartasBaraja}`;
 
@@ -55,9 +56,76 @@ function Parcial(BarajaParcial) {
 function Mezclar(MezclarBaraja) {
     const apiUrl = `https://deckofcardsapi.com/api/deck/<<deck_id>>/pile/<<pile_name>>/shuffle/${MezclarBaraja}`;
 }
+*/
+
+//code
+const deckUrl = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1";
+const hitButton = document.querySelector(".hit-button");
+const cardsContainer = document.querySelector(".cards");
+const main = document.querySelector("main");
+const message = document.querySelector(".message");
+const tryAgain = document.querySelector(".try-again");
+let deckId;
+let isGameOver = false;
+let total = 0;
+
+async function getDeck(){
+  const response = await fetch(deckUrl);
+  const deckDetails = await response.json();
+  deckId = deckDetails.deck_id;
+  isGameOver = false;
+}
+
+getDeck();
+
+hitButton.onclick = async function(){
+  const cardUrl = `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`;
+  const response = await fetch(cardUrl);
+  const card = await response.json();
+  const cardDetails = card.cards[0];
+  cardsContainer.innerHTML += `<img src="${cardDetails.image}" alt="${cardDetails.value} of ${cardDetails.suit}">`
+  if(cardDetails.value === "QUEEN" || cardDetails.value === "KING" || cardDetails.value === "JACK" ){
+    total += 10;
+  }
+  else if(cardDetails.value === "ACE" && (total + 11) <= 21){
+    total += 11;
+  }
+  else if(cardDetails.value === "ACE"){
+    total += 1;
+  }
+  else {
+    total += parseInt(cardDetails.value);
+  }
+  
+  if(total > 21){
+    main.style.filter = "blur(4px)";
+    message.style.display = "block";
+	message.textContent = "¡Te has pasado de 21! Has perdido.";
+  }
+  console.log(total);
+}
+
+tryAgain.onclick = function(){
+  total = 0;
+  cardsContainer.innerHTML = "";
+  main.style.filter = "blur(0px)";
+  message.style.display = "none";
+  getDeck();
+}
 
 
 
+
+
+
+
+
+
+
+
+
+
+/*
 
 // Función para barajar las cartas
 async function barajarCartas() {
@@ -97,7 +165,7 @@ async function barajarCartas() {
   
   // Llamada a la función principal
   barajarYMostrarCartas();
-  
+*/  
 
 
 

@@ -1,8 +1,9 @@
 body{
     background-color: gray;
 }
-.button {
-	background-color: aliceblue;
+
+button {
+	background-color: cadetblue;
 	border: none;
 	color: black;
 	text-align: center;
@@ -11,4 +12,20 @@ body{
 	font-size: 16px;
 	border-radius: 2vi;
 	cursor: pointer;
-  }
+}
+
+main {
+	max-width: 1000px;
+	margin: auto;
+}
+    
+.mensaje {
+	display: none;
+	position: fixed;
+	left: 50%;
+	z-index: 1000;
+	transform: translateX(-50%);
+	background: RGB(255,255,255,0.9);
+	padding: 50px;
+	border: 2px solid black;
+}
